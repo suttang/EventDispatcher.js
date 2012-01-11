@@ -1,7 +1,6 @@
-function EventDispatcher() {
+var EventDispatcher = function() {
 	this._events = {};
 }
-
 EventDispatcher.prototype.dispatchEvent = function(type) {
 	if (this._events[type] && Array.isArray(this._events[type])) {
 		var handlers = this._events[type].slice();
@@ -21,16 +20,10 @@ EventDispatcher.prototype.addEventListener = function(type, listener) {
 	if (typeof listener !== 'function')
 		throw new Error('addListener only takes instances of Function');
 	if (!this._events[type]) this._events[type] = [];
-
+	
 	if (this._events[type].indexOf(listener) === -1)
 		this._events[type].push(listener);
 	
-	return this;
-}
-
-Array.prototype.erase = function(item) {
-	for (var i = this.length; i--;)
-		if (this[i] === item) this.splice(i, 1);
 	return this;
 }
 EventDispatcher.prototype.removeEventListener = function(type, listener) {
